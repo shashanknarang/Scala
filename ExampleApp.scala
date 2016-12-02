@@ -2,8 +2,19 @@ package Example
 /**
   * Created by Shashank.Narang on 11/23/2016.
   */
-
-object primes extends App {
-  def isPrime(n: Int) = (2 until n) forall (n % _ != 0)
-  for (i <- 1 to 100 if isPrime(i)) println(i)
+object abstractTypes extends App {
+  abstract class Buffer {
+    type T; val element: T
+  }
+  abstract class SeqBuffer {
+    type T; val element: Seq[T]; def length = element.length
+  }
+  def newIntBuffer(el: Int) = new Buffer {
+    type T = Int; val element = el
+  }
+  def newIntBuffer(el: Int*) = new SeqBuffer {
+    type T = Int; val element = el
+  }
+  println(newIntBuffer(1).element)
+  println(newIntBuffer(1, 2, 3).length)
 }
